@@ -1,3 +1,5 @@
+"use client"
+
 import Header from "@/components/Header";
 import SearchFilter from "@/components/SearchFilter";
 import SearchFilterDropdown from "@/components/SearchFilterDropdown";
@@ -5,7 +7,27 @@ import { MdArrowDropDown } from "react-icons/md";
 import Image from "next/image";
 import SchoolCard from "@/components/SchoolCard";
 
+import { useDispatch, useSelector } from "@/app/store";
+import { getSchools } from "@/app/store/slices/school";
+import { useEffect, useState } from "react";
+
+
+
 const SearchPage = () => {
+  const [rows, setRows] = useState([])
+  const dispatch = useDispatch();
+
+  const { schools } = useSelector((state: { school: { schools: any } }) => state.school);
+
+  useEffect(() => {
+    dispatch<any>(getSchools());
+  }, [dispatch])
+
+  useEffect(() => {
+    setRows(schools)
+  }, [schools])
+
+
   return (
     <div className="w-full">
       <Header />
@@ -61,9 +83,9 @@ const SearchPage = () => {
                 >
                   <path
                     stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
                   />
                 </svg>
@@ -71,10 +93,11 @@ const SearchPage = () => {
             </div>
 
             <div className=" mt-[20px]">
-            <SchoolCard />
-            <SchoolCard />
-            <SchoolCard />
-            <SchoolCard />
+              {
+                rows&& rows.map((school, index) => (
+                  <SchoolCard key={index} school={school} />
+                ))
+              }
             </div>
             
           </div>

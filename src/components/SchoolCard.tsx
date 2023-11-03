@@ -1,17 +1,33 @@
 import Image from "next/image";
-import Language from "@/assets/icons/language.svg"
+import DefaultUniImage from '@/assets/images/university_default.jpg';
+import { capitalize } from "@/utils/cap";
 
-const SchoolCard = () => {
+interface University {
+    name: string;
+    type: "private" | "state";
+    gradeType: "associate" | "bachelor" | "master" | "PhD";
+    educationType: "full time" | "evening" | "online";
+    campusType: "on" | "off";
+    primaryLanguage: string;
+    country: string;
+    yearsOfStudy: number;
+    deadlineForApplication: string;
+    season: string;
+    amount: number;
+    course: string;
+  }
+
+const SchoolCard = ({school}: { school: University }) => {
     return (
         <div className="mb-[20px] p-[25px] bg-white border border-gray-300 shadow-inner rounded-2xl mt-[10px]">
             <div className=" flex justify-between gap-[30px]">
                 <div className=" w-[30%] flex items-center justify-center">
-                    <Image alt="University logo" src="./vercel.svg" className="rounded-xl" width={269} height={192} />
+                    <Image alt="University logo" src={DefaultUniImage} className="rounded-xl" width={269} height={192} />
                 </div>
                 <div className="flex flex-1 flex-col border-r border-[1px solid] border-gray-300">
-                    <h5 className=" text-[20px]">European University of Lefke</h5>
-                    <h6 className="text-gray-500 text-[16px] mt-2">Private University</h6>
-                    <h6 className="my-[10px]">Health Manangement </h6>
+                    <h5 className=" text-[20px]">{school.name}</h5>
+                    <h6 className="text-gray-500 text-[16px] mt-2">{capitalize(school.type) } University</h6>
+                    <h6 className="my-[10px]">{capitalize(school.course)} </h6>
 
                     <div className="flex flex-wrap w-[80%]">
                         <div className="h-[30px] min-w-[100px] flex justify-center items-center m-1 font-medium py-1 px-2 rounded-lg text-green-700 bg-white border border-green-300 ">
@@ -25,7 +41,7 @@ const SchoolCard = () => {
                                 </div>
                             </div>
                             <div className="text-xs font-normal leading-none max-w-full flex-initial">
-                                English
+                                {school.primaryLanguage}
                             </div>
                         </div>
                         <div className="h-[30px] min-w-[100px] flex justify-center items-center m-1 font-medium py-1 px-2 rounded-lg text-orange-700 bg-white border border-orange-300 ">
@@ -38,7 +54,7 @@ const SchoolCard = () => {
                                 </div>
                             </div>
                             <div className="text-xs font-normal leading-none max-w-full flex-initial">
-                                4 years
+                                {school.yearsOfStudy} years
                             </div>
                         </div>
                         <div className="h-[30px] min-w-[100px] flex justify-center items-center m-1 font-medium py-1 px-2 rounded-lg text-blue-700 bg-white border border-blue-300 ">
@@ -53,7 +69,7 @@ const SchoolCard = () => {
                                 </div>
                             </div>
                             <div className="text-xs font-normal leading-none max-w-full flex-initial">
-                                Full time
+                                {capitalize(school.educationType)}
                             </div>
                         </div>
                         <div className="h-[30px] min-w-[40px] flex justify-center items-center m-1 font-medium py-3 px-2 rounded-lg text-purple-700 bg-white border border-purple-300 ">
@@ -67,7 +83,7 @@ const SchoolCard = () => {
                                 </div>
                             </div>
                             <div className="text-xs font-normal leading-none max-w-full flex-initial">
-                                Bachelor degree
+                                {capitalize(school.gradeType)} degree
                             </div>
                         </div>
                     </div>
@@ -76,7 +92,7 @@ const SchoolCard = () => {
                 <div className="w-[20%] text-center">
                     <div>
                         <div>
-                            <h6 className="text-gray-500 text-[16px] line-through">2790.00 EUR</h6>
+                            <h6 className="text-gray-500 text-[16px] line-through">{school.amount} EUR</h6>
                         </div>
                         <div>
                             <h4 className="text-[20px] text-[#0dcaf0]">1395.00 EUR</h4>
@@ -93,17 +109,17 @@ const SchoolCard = () => {
                                 </div>
                             </div>
                             <div className="text-xs font-normal leading-none max-w-full flex-initial">
-                                Yearly
+                                Yearly 
                             </div>
                         </div>
                     </div>
                     <div>
                         <hr className="border-[1px solid] border-gray-300 m-[5px]" />
                         <h6 className="text-gray-500 text-[16px] ">Deadline:
-                            <span className="text-red-500"> 11/30/2023</span>
+                            <span className="text-red-500">{school.deadlineForApplication}</span>
                         </h6>
                         <h6 className="text-gray-500 text-[16px] ">Season:
-                            <span className="font-[400]"> Fall (September 2023)</span>
+                            <span className="font-[400]"> {capitalize(school.season)} </span>
                         </h6>
                         <button className='bg-[#0288D1] shadow-xl w-[100%] text-white rounded-[15px] py-2 px-8 mt-4'>
                             Apply
