@@ -85,7 +85,7 @@ const SearchFilter = () => {
                 />
             </div>
 
-            <button className='bg-[#0B69FF]  w-[80%] text-white rounded-[15px] py-2 px-8 mt-4'>
+            <button className='bg-[#0288D1] shadow-2xl w-[80%] text-white rounded-[15px] py-2 px-8 mt-4'>
                 CLEAR FILTERS
             </button>
         </div>

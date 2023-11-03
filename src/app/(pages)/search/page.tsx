@@ -2,6 +2,8 @@ import Header from "@/components/Header";
 import SearchFilter from "@/components/SearchFilter";
 import SearchFilterDropdown from "@/components/SearchFilterDropdown";
 import { MdArrowDropDown } from "react-icons/md";
+import Image from "next/image";
+import SchoolCard from "@/components/SchoolCard";
 
 const SearchPage = () => {
   return (
@@ -26,12 +28,12 @@ const SearchPage = () => {
           </div>
         </div>
 
-        <div className="flex mt-10  gap-[20px]">
-          <div className="w-[23%] flex m-auto bg-white border border-gray-400 rounded-xl min-h-[500px] ">
+        <div className="flex mt-10 gap-[20px]">
+          <div className="w-[23%] flex bg-white border border-gray-400 rounded-xl h-[650px] ">
             <SearchFilter />
           </div>
 
-          <div className="flex-1 justify-between flex w-full flex-col">
+          <div className="flex-1 flex w-full flex-col">
             <div className="relative">
               <input
                 type="text"
@@ -66,6 +68,13 @@ const SearchPage = () => {
                   />
                 </svg>
               </button>
+            </div>
+
+            <div className=" mt-[20px]">
+            <SchoolCard />
+            <SchoolCard />
+            <SchoolCard />
+            <SchoolCard />
             </div>
             
           </div>
