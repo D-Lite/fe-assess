@@ -1,4 +1,4 @@
-export function capitalize(s: any): string 
+export function capitalize(s: string) 
 {
-    return s[0].toUpperCase() + s.slice(1);
+   return s.replace(/\b\w/g, (char) => char.toUpperCase());
 }

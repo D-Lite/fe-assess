@@ -1,25 +1,14 @@
 import Image from "next/image";
 import DefaultUniImage from '@/assets/images/university_default.jpg';
 import { capitalize } from "@/utils/cap";
-
-interface University {
-    name: string;
-    type: "private" | "state";
-    gradeType: "associate" | "bachelor" | "master" | "PhD";
-    educationType: "full time" | "evening" | "online";
-    campusType: "on" | "off";
-    primaryLanguage: string;
-    country: string;
-    yearsOfStudy: number;
-    deadlineForApplication: string;
-    season: string;
-    amount: number;
-    course: string;
-  }
+import { University } from "@/utils/commonTypes";
 
 const SchoolCard = ({school}: { school: University }) => {
     return (
-        <div className="mb-[20px] p-[25px] bg-white border border-gray-300 shadow-inner rounded-2xl mt-[10px]">
+        <div>
+        {
+            school && (
+                <div className="mb-[20px] p-[25px] bg-white border border-gray-300 shadow-inner rounded-2xl mt-[10px]">
             <div className=" flex justify-between gap-[30px]">
                 <div className=" w-[30%] flex items-center justify-center">
                     <Image alt="University logo" src={DefaultUniImage} className="rounded-xl" width={269} height={192} />
@@ -116,7 +105,7 @@ const SchoolCard = ({school}: { school: University }) => {
                     <div>
                         <hr className="border-[1px solid] border-gray-300 m-[5px]" />
                         <h6 className="text-gray-500 text-[16px] ">Deadline:
-                            <span className="text-red-500">{school.deadlineForApplication}</span>
+                            <span className="text-red-500">{+' '+ school.deadlineForApplication}</span>
                         </h6>
                         <h6 className="text-gray-500 text-[16px] ">Season:
                             <span className="font-[400]"> {capitalize(school.season)} </span>
@@ -127,6 +116,9 @@ const SchoolCard = ({school}: { school: University }) => {
                     </div>
                 </div>
             </div>
+        </div>
+            )
+        }
         </div>
     )
 }

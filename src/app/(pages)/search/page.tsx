@@ -10,11 +10,14 @@ import SchoolCard from "@/components/SchoolCard";
 import { useDispatch, useSelector } from "@/app/store";
 import { getSchools } from "@/app/store/slices/school";
 import { useEffect, useState } from "react";
-
+import { University } from "@/utils/commonTypes";
 
 
 const SearchPage = () => {
-  const [rows, setRows] = useState([])
+  const [rows, setRows] = useState<University[]>([])
+  const [filteredRows, setFilteredRows] = useState<University[]>([]); // State for filtered rows
+  const [searchValue, setSearchValue] = useState<string>(''); // State for search input value
+  
   const dispatch = useDispatch();
 
   const { schools } = useSelector((state: { school: { schools: any } }) => state.school);
@@ -25,8 +28,16 @@ const SearchPage = () => {
 
   useEffect(() => {
     setRows(schools)
-  }, [schools])
+    setFilteredRows(schools)
+  }, [schools]) 
 
+  const handleSearch = (value: string) => {
+    setSearchValue(value);
+    const filtered = rows.filter((school) =>
+      school.course.toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredRows(filtered);
+  };
 
   return (
     <div className="w-full">
@@ -62,6 +73,7 @@ const SearchPage = () => {
                 id="searchprograms"
                 className="block rounded-lg px-4 py-4 w-full text-sm text-black dark:bg-gray-700 border-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
+                onChange={(e) => handleSearch(e.target.value)}
               />
               <label
                 htmlFor="searchprograms"
@@ -71,7 +83,7 @@ const SearchPage = () => {
                 Type Interested Program
               </label>
               <button
-                type="submit"
+                // type="submit"
                 className="absolute text-white right-6 bottom-[40%] focus:ring-4 focus:outline-none"
               >
                 <svg
@@ -93,11 +105,16 @@ const SearchPage = () => {
             </div>
 
             <div className=" mt-[20px]">
-              {
-                rows&& rows.map((school, index) => (
+              {/* {
+                rows.length > 0 && rows.map((school, index) => (
                   <SchoolCard key={index} school={school} />
                 ))
-              }
+              } */}
+              {filteredRows.length > 0 ? (
+          filteredRows.map((school, index) => <SchoolCard key={index} school={school} />)
+        ) : (
+          <p>No matching schools found.</p>
+        )}
             </div>
             
           </div>

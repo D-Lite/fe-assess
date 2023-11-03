@@ -1,6 +1,7 @@
+import { University } from "@/utils/commonTypes"
 import { NextResponse } from "next/server"
 
-const schools = [
+const schools: University[] = [
   {
     "name": "Bogazici University",
     "type": "state",
@@ -182,18 +183,6 @@ const schools = [
     "season": "2023 Fall",
     "amount": 18000,
     "course": "Pharmacy"
-  },
-  {
-    "gradeType": "PhD",
-    "educationType": "full time",
-    "campusType": "on",
-    "primaryLanguage": "Malay",
-    "country": "Malaysia",
-    "yearsOfStudy": 5,
-    "deadlineForApplication": "2023-05-15",
-    "season": "2023 Fall",
-    "amount": 18000,
-    "course": "Biotechnology"
   },
   {
     "name": "Cyprus International University",
