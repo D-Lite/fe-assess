@@ -67,6 +67,7 @@ const SearchPage = () => {
                 </svg>
               </button>
             </div>
+            
           </div>
         </div>
       </div>
