@@ -1,4 +1,5 @@
 export interface University {
+    id: string;
     name: string;
     type: "private" | "state";
     gradeType: "associate" | "bachelor" | "master" | "PhD";

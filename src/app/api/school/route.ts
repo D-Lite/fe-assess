@@ -3,6 +3,7 @@ import { NextResponse } from "next/server"
 
 const schools: University[] = [
   {
+    "id": "1",
     "name": "Bogazici University",
     "type": "state",
     "gradeType": "bachelor",
@@ -17,6 +18,7 @@ const schools: University[] = [
     "course": "Computer Science"
   },
   {
+    "id": "2",
     "name": "Istanbul Technical University",
     "type": "state",
     "gradeType": "master",
@@ -31,6 +33,7 @@ const schools: University[] = [
     "course": "Information Science"
   },
   {
+    "id": "3",
     "name": "Sabanci University",
     "type": "private",
     "gradeType": "PhD",
@@ -45,6 +48,7 @@ const schools: University[] = [
     "course": "Software Engineering"
   },
   {
+    "id": "4",
     "name": "Manipal Academy of Higher Education",
     "type": "private",
     "gradeType": "associate",
@@ -59,6 +63,7 @@ const schools: University[] = [
     "course": "English",
   },
   {
+    "id": "5",
     "name": "Indian Institute of Technology Delhi",
     "type": "state",
     "gradeType": "bachelor",
@@ -73,6 +78,7 @@ const schools: University[] = [
     "course": "Mathematics"
   },
   {
+    "id": "6",
     "name": "University of Malaya",
     "type": "state",
     "gradeType": "master",
@@ -87,6 +93,7 @@ const schools: University[] = [
     "course": "Physics"
   },
   {
+    "id": "7",
     "name": "Universiti Teknologi Malaysia",
     "type": "state",
     "gradeType": "PhD",
@@ -101,6 +108,7 @@ const schools: University[] = [
     "course": "Chemistry"
   },
   {
+    "id": "8",
     "name": "Near East University",
     "type": "private",
     "gradeType": "associate",
@@ -115,6 +123,7 @@ const schools: University[] = [
     "course": "Biology"
   },
   {
+    "id": "9",
     "name": "Eastern Mediterranean University",
     "type": "state",
     "gradeType": "bachelor",
@@ -129,6 +138,7 @@ const schools: University[] = [
     "course": "Health Management"
   },
   {
+    "id": "10",
     "name": "Taras Shevchenko National University of Kyiv",
     "type": "state",
     "gradeType": "master",
@@ -143,6 +153,7 @@ const schools: University[] = [
     "course": "Nursing"
   },
   {
+    "id": "11",
     "name": "Lviv Polytechnic National University",
     "type": "state",
     "gradeType": "PhD",
@@ -157,6 +168,7 @@ const schools: University[] = [
     "course": "Medicine"
   },
   {
+    "id": "12",
     "name": "University of Sarajevo",
     "type": "state",
     "gradeType": "associate",
@@ -171,6 +183,7 @@ const schools: University[] = [
     "course": "Dentistry"
   },
   {
+    "id": "13",
     "name": "University of Mostar",
     "type": "state",
     "gradeType": "bachelor",
@@ -185,6 +198,7 @@ const schools: University[] = [
     "course": "Pharmacy"
   },
   {
+    "id": "14",
     "name": "Cyprus International University",
     "type": "private",
     "gradeType": "associate",
@@ -199,6 +213,7 @@ const schools: University[] = [
     "course": "Business Administration"
   },
   {
+    "id": "15",
     "name": "Kharkiv National University of Radio Electronics",
     "type": "state",
     "gradeType": "bachelor",
@@ -213,6 +228,7 @@ const schools: University[] = [
     "course": "Information Technology"
   },
   {
+    "id": "16",
     "name": "University of Zenica",
     "type": "state",
     "gradeType": "master",

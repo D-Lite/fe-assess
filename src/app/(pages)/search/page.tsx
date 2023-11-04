@@ -31,9 +31,6 @@ const SearchPage = () => {
   // Invoke when user click to request another page.
   const handlePageClick = (event: any) => {
     const newOffset = (event.selected * itemsPerPage) % filteredRows.length;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
     setItemOffset(newOffset);
   };
 
@@ -58,7 +55,7 @@ const SearchPage = () => {
     setTotalPages(Math.ceil(schools / itemsPerPage));
     setQueryParam('limit', itemsPerPage.toString());
     setQueryParam('ordering', sortByAmount)
-  }, [schools, sortByAmount])
+  }, [schools, sortByAmount, itemsPerPage])
 
   const handleSearch = (value: string) => {
     setSearchValue(value);
@@ -112,7 +109,7 @@ const SearchPage = () => {
         </div>
 
         <div className="flex mt-10 gap-[20px]">
-          <div className="w-[23%] flex bg-white border border-gray-400 rounded-xl h-[650px] ">
+          <div className="w-[23%]   ">
             <SearchFilter data={filteredRows} />
           </div>
 
