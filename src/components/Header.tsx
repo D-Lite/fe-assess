@@ -1,9 +1,18 @@
+import { useEffect, useState } from "react";
 import { HiTranslate } from "react-icons/hi";
 
 const Header = () => {
+  const [isSticky, setSticky] = useState(false);
+     const handleScroll = () => { const windowScrollTop = window.scrollY;
+         if (windowScrollTop > 10) { setSticky(true)} 
+         else { setSticky(false) } };
+          useEffect(() => {window.addEventListener('scroll', handleScroll);
+          return () => { window.removeEventListener('scroll', handleScroll); }; 
+        }, []); 
+
   return (
-    <div className="w-full my-8">
-      <header className="">
+    <div className="w-full">
+      <header className="py-4" style={{ background: isSticky ? '#fff' : '', width: '100%', zIndex: '999',position:isSticky ?'fixed':'absolute' }}>
         <nav className=" border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
           <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
             <a href="#" className="flex items-center">

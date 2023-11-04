@@ -1,34 +1,45 @@
 'use client'
 
-import React from 'react';
+import { capitalize } from '@/utils/cap';
+import { University } from '@/utils/commonTypes';
+import React, { useEffect, useState } from 'react';
 import Select, { StylesConfig } from 'react-select';
 
 interface Props {
-    name: string;
-}
-interface ColourOption {
-    readonly value: string;
-    readonly label: string;
-    readonly color: string;
-    readonly isFixed?: boolean;
-    readonly isDisabled?: boolean;
+    data: University[];
 }
 
-const colourOptions: readonly ColourOption[] = [
-    { value: 'ocean', label: 'Ocean', color: '#00B8D9', isFixed: true },
-    { value: 'blue', label: 'Blue', color: '#0052CC', isDisabled: true },
-    { value: 'purple', label: 'Purple', color: '#5243AA' },
-    { value: 'red', label: 'Red', color: '#FF5630', isFixed: true },
-    { value: 'orange', label: 'Orange', color: '#FF8B00' },
-    { value: 'yellow', label: 'Yellow', color: '#FFC400' },
-    { value: 'green', label: 'Green', color: '#36B37E' },
-    { value: 'forest', label: 'Forest', color: '#00875A' },
-    { value: 'slate', label: 'Slate', color: '#253858' },
-    { value: 'silver', label: 'Silver', color: '#666666' },
-];
 
+const SearchFilter = ({data}: Props) => {
+const [languages, setLanguages] = useState<string[]>([]);
+const [campuses, setCampuses] = useState<string[]>([]);
+const [educationTypes, setEducationTypes] = useState<string[]>([]);
+const [gradeTypes, setGradeTypes] = useState<string[]>([]);
+const [universityTypes, setUniversityTypes] = useState<string[]>([]);
+const [countries, setCountries] = useState<string[]>([]);
 
-const SearchFilter = () => {
+    useEffect(() => {
+            const uniqueLanguages: any = Array.from(new Set(data.map((school: University) => school.primaryLanguage)));
+            setLanguages(uniqueLanguages.map((language: string) => ({ value: language.toLowerCase(), label: capitalize(language) })));
+
+            const uniqueCampus: any = Array.from(new Set(data.map((school: University) => school.campusType)));
+            setCampuses(uniqueCampus.map((campus: string) => ({ value: campus.toLowerCase(), label: capitalize(campus) })));
+
+            const uniqueEducationType: any = Array.from(new Set(data.map((school: University) => school.educationType)));
+            setEducationTypes(uniqueEducationType.map((type: string) => ({ value: type.toLowerCase(), label: capitalize(type) })));
+
+            const uniqueGradeType: any = Array.from(new Set(data.map((school: University) => school.gradeType)));
+            setGradeTypes(uniqueGradeType.map((type: string) => ({ value: type.toLowerCase(), label: capitalize(type) })));
+
+            const uniqueUniversityType: any = Array.from(new Set(data.map((school: University) => school.type)));
+            setUniversityTypes(uniqueUniversityType.map((type: string) => ({ value: type.toLowerCase(), label: capitalize(type) })));
+
+            const uniqueCountry: any = Array.from(new Set(data.map((school: University) => school.country)));
+            setCountries(uniqueCountry.map((country: string) => ({ value: country.toLowerCase(), label: capitalize(country) })));
+
+            
+    }, [data])
+
     return (
         <div className='w-full py-8 flex flex-col items-center'>
             <div className="flex w-full flex-col my-2 gap-[10px] px-4">
@@ -36,7 +47,8 @@ const SearchFilter = () => {
 
                 <Select
                     placeholder='Select country'
-                    options={colourOptions}
+                    options={countries}
+                    isMulti
                 />
             </div>
 
@@ -45,7 +57,8 @@ const SearchFilter = () => {
 
                 <Select
                     placeholder='Select University Type'
-                    options={colourOptions}
+                    options={universityTypes}
+                    isMulti
                 />
             </div>
 
@@ -54,7 +67,8 @@ const SearchFilter = () => {
 
                 <Select
                     placeholder='Select Grade Type'
-                    options={colourOptions}
+                    options={gradeTypes}
+                    isMulti
                 />
             </div>
 
@@ -63,7 +77,8 @@ const SearchFilter = () => {
 
                 <Select
                     placeholder='Select Education Type'
-                    options={colourOptions}
+                    options={educationTypes}
+                    isMulti
                 />
             </div>
 
@@ -72,16 +87,18 @@ const SearchFilter = () => {
 
                 <Select
                     placeholder='Select Campus Type'
-                    options={colourOptions}
+                    options={campuses}
+                    isMulti
                 />
             </div>
 
-            <div className="flex flex-col my-2 gap-[10px] px-2">
+            <div className="flex flex-col my-2 gap-[10px] px-2 w-full">
                 <p>Education Language</p>
 
                 <Select
                     placeholder='Select Education Language'
-                    options={colourOptions}
+                    options={languages}
+                    isMulti
                 />
             </div>
 

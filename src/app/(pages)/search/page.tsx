@@ -17,7 +17,6 @@ const SearchPage = () => {
   const [rows, setRows] = useState<University[]>([])
   const [filteredRows, setFilteredRows] = useState<University[]>([]); // State for filtered rows
   const [searchValue, setSearchValue] = useState<string>(''); // State for search input value
-  
   const dispatch = useDispatch();
 
   const { schools } = useSelector((state: { school: { schools: any } }) => state.school);
@@ -29,6 +28,9 @@ const SearchPage = () => {
   useEffect(() => {
     setRows(schools)
     setFilteredRows(schools)
+
+   
+
   }, [schools]) 
 
   const handleSearch = (value: string) => {
@@ -39,6 +41,7 @@ const SearchPage = () => {
     setFilteredRows(filtered);
   };
 
+  
   return (
     <div className="w-full">
       <Header />
@@ -63,7 +66,7 @@ const SearchPage = () => {
 
         <div className="flex mt-10 gap-[20px]">
           <div className="w-[23%] flex bg-white border border-gray-400 rounded-xl h-[650px] ">
-            <SearchFilter />
+            <SearchFilter data={filteredRows} />
           </div>
 
           <div className="flex-1 flex w-full flex-col">
@@ -105,11 +108,6 @@ const SearchPage = () => {
             </div>
 
             <div className=" mt-[20px]">
-              {/* {
-                rows.length > 0 && rows.map((school, index) => (
-                  <SchoolCard key={index} school={school} />
-                ))
-              } */}
               {filteredRows.length > 0 ? (
           filteredRows.map((school, index) => <SchoolCard key={index} school={school} />)
         ) : (

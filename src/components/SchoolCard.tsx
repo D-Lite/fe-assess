@@ -81,10 +81,10 @@ const SchoolCard = ({school}: { school: University }) => {
                 <div className="w-[20%] text-center">
                     <div>
                         <div>
-                            <h6 className="text-gray-500 text-[16px] line-through">{school.amount} EUR</h6>
+                            <h6 className="text-gray-500 text-[16px] line-through">{school.amount}.00 EUR</h6>
                         </div>
                         <div>
-                            <h4 className="text-[20px] text-[#0dcaf0]">1395.00 EUR</h4>
+                            <h4 className="text-[20px] text-[#0dcaf0]">{school.amount*0.7}.00 EUR</h4>
                         </div>
                     </div>
                     <div className=" text-center flex items-center justify-center">
