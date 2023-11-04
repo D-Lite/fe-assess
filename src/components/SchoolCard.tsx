@@ -84,7 +84,7 @@ const SchoolCard = ({school}: { school: University }) => {
                             <h6 className="text-gray-500 text-[16px] line-through">{school.amount}.00 EUR</h6>
                         </div>
                         <div>
-                            <h4 className="text-[20px] text-[#0dcaf0]">{school.amount*0.7}.00 EUR</h4>
+                            <h4 className="text-[20px] text-[#0dcaf0]">{(school.amount*0.7).toFixed(0)}.00 EUR</h4>
                         </div>
                     </div>
                     <div className=" text-center flex items-center justify-center">

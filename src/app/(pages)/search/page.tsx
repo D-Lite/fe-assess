@@ -4,22 +4,31 @@ import Header from "@/components/Header";
 import SearchFilter from "@/components/SearchFilter";
 import SearchFilterDropdown from "@/components/SearchFilterDropdown";
 import { MdArrowDropDown } from "react-icons/md";
-import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 import SchoolCard from "@/components/SchoolCard";
 
 import { useDispatch, useSelector } from "@/app/store";
 import { getSchools } from "@/app/store/slices/school";
 import { useEffect, useState } from "react";
 import { University } from "@/utils/commonTypes";
+import useQueryParams from "@/app/hooks/useQueryHook";
 
 
 const SearchPage = () => {
   const [rows, setRows] = useState<University[]>([])
-  const [filteredRows, setFilteredRows] = useState<University[]>([]); // State for filtered rows
-  const [searchValue, setSearchValue] = useState<string>(''); // State for search input value
+  const [filteredRows, setFilteredRows] = useState<University[]>([]); 
+  const [searchValue, setSearchValue] = useState<string>(''); 
+
+  
+
+const searchParams = useSearchParams();
+
   const dispatch = useDispatch();
+  const [sortByAmount, setSortByAmount] = useState('-can_apply,rank');
+  const { setQueryParam } = useQueryParams();
 
   const { schools } = useSelector((state: { school: { schools: any } }) => state.school);
+  
 
   useEffect(() => {
     dispatch<any>(getSchools());
@@ -29,9 +38,9 @@ const SearchPage = () => {
     setRows(schools)
     setFilteredRows(schools)
 
-   
+    setQueryParam('ordering', sortByAmount)
+  }, [schools, sortByAmount]) 
 
-  }, [schools]) 
 
   const handleSearch = (value: string) => {
     setSearchValue(value);
@@ -39,6 +48,26 @@ const SearchPage = () => {
       school.course.toLowerCase().includes(value.toLowerCase())
     );
     setFilteredRows(filtered);
+  };
+
+  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortByAmount(event.target.value);
+
+    // Sort the filtered rows based on the selected sort order
+    const sorted = sortRows(filteredRows, event.target.value);
+    setFilteredRows(sorted);
+  };
+
+  const sortRows = (data: University[], sortOrder: string) => {
+    let sortedData = [...data];
+    if (sortOrder === '-can_apply,discounted_price') {
+      sortedData.sort((a, b) => a.amount - b.amount);
+    } else if (sortOrder === '-can_apply,-discounted_price') {
+      sortedData.sort((a, b) => b.amount - a.amount);
+    } else if(sortOrder === '-can_apply,rank') {
+      sortedData = [...rows]
+    }
+    return sortedData;
   };
 
   
@@ -60,7 +89,7 @@ const SearchPage = () => {
             <p className="font-[400] text-gray-400 text-[1rem]">
               We found 4452 programs for you
             </p>
-            <SearchFilterDropdown />
+            <SearchFilterDropdown  value={sortByAmount} onChange={handleSortChange} />
           </div>
         </div>
 
