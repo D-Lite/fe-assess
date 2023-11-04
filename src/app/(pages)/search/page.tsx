@@ -2,9 +2,7 @@
 
 import Header from "@/components/Header";
 import SearchFilter from "@/components/SearchFilter";
-import SearchFilterDropdown from "@/components/SearchFilterDropdown";
-import { MdArrowDropDown } from "react-icons/md";
-import { useSearchParams } from "next/navigation";
+import SearchFilterDropdown from "@/components/SearchFilterDropdown"; 
 import SchoolCard from "@/components/SchoolCard";
 
 import { useDispatch, useSelector } from "@/app/store";
@@ -12,23 +10,42 @@ import { getSchools } from "@/app/store/slices/school";
 import { useEffect, useState } from "react";
 import { University } from "@/utils/commonTypes";
 import useQueryParams from "@/app/hooks/useQueryHook";
+import ReactPaginate from "react-paginate";
 
 
 const SearchPage = () => {
   const [rows, setRows] = useState<University[]>([])
-  const [filteredRows, setFilteredRows] = useState<University[]>([]); 
-  const [searchValue, setSearchValue] = useState<string>(''); 
+  const [filteredRows, setFilteredRows] = useState<University[]>([]);
+  const [searchValue, setSearchValue] = useState<string>('');
 
-  
+  const [totalPages, setTotalPages] = useState(0);
 
-const searchParams = useSearchParams();
+
+  const [itemOffset, setItemOffset] = useState(0);
+
+  const itemsPerPage = 10;
+  const endOffset = itemOffset + itemsPerPage; 
+  const currentItems = filteredRows.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(filteredRows.length / itemsPerPage);
+
+  // Invoke when user click to request another page.
+  const handlePageClick = (event: any) => {
+    const newOffset = (event.selected * itemsPerPage) % filteredRows.length;
+    console.log(
+      `User requested page number ${event.selected}, which is offset ${newOffset}`
+    );
+    setItemOffset(newOffset);
+  };
+
+
+
 
   const dispatch = useDispatch();
   const [sortByAmount, setSortByAmount] = useState('-can_apply,rank');
   const { setQueryParam } = useQueryParams();
 
   const { schools } = useSelector((state: { school: { schools: any } }) => state.school);
-  
+
 
   useEffect(() => {
     dispatch<any>(getSchools());
@@ -38,9 +55,10 @@ const searchParams = useSearchParams();
     setRows(schools)
     setFilteredRows(schools)
 
+    setTotalPages(Math.ceil(schools / itemsPerPage));
+    setQueryParam('limit', itemsPerPage.toString());
     setQueryParam('ordering', sortByAmount)
-  }, [schools, sortByAmount]) 
-
+  }, [schools, sortByAmount])
 
   const handleSearch = (value: string) => {
     setSearchValue(value);
@@ -64,13 +82,13 @@ const searchParams = useSearchParams();
       sortedData.sort((a, b) => a.amount - b.amount);
     } else if (sortOrder === '-can_apply,-discounted_price') {
       sortedData.sort((a, b) => b.amount - a.amount);
-    } else if(sortOrder === '-can_apply,rank') {
+    } else if (sortOrder === '-can_apply,rank') {
       sortedData = [...rows]
     }
     return sortedData;
   };
 
-  
+
   return (
     <div className="w-full">
       <Header />
@@ -89,7 +107,7 @@ const searchParams = useSearchParams();
             <p className="font-[400] text-gray-400 text-[1rem]">
               We found 4452 programs for you
             </p>
-            <SearchFilterDropdown  value={sortByAmount} onChange={handleSortChange} />
+            <SearchFilterDropdown value={sortByAmount} onChange={handleSortChange} />
           </div>
         </div>
 
@@ -138,12 +156,27 @@ const searchParams = useSearchParams();
 
             <div className=" mt-[20px]">
               {filteredRows.length > 0 ? (
-          filteredRows.map((school, index) => <SchoolCard key={index} school={school} />)
-        ) : (
-          <p>No matching schools found.</p>
-        )}
+                currentItems.map((school, index) =>
+                  <SchoolCard key={index} school={school} />
+                )) : (
+                <p>No matching schools found.</p>
+              )}
+
+              <div className="w-full items-center justify-center flex">
+                <ReactPaginate
+                  breakLabel="..."
+                  nextLabel=">"
+                  className="flex justify-between gap-5 min-w-[50px]"
+                  activeClassName="w-[30px] h-[30px] flex justify-center bg-gray-200 p-0 m-0 rounded-full"
+                  onPageChange={handlePageClick}
+                  pageRangeDisplayed={5}
+                  pageCount={pageCount}
+                  previousLabel="<"
+                  renderOnZeroPageCount={null}
+                />
+              </div>
             </div>
-            
+
           </div>
         </div>
       </div>
