@@ -1,6 +1,8 @@
 'use client'
+import Footer from '@/components/Footer'
 import './globals.css'
 import ReduxProvider from './store/ReduxProvider'
+import Header from '@/components/Header'
 
 export default function RootLayout({
   children,
@@ -9,11 +11,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body className=''>
         <ReduxProvider>
-          <div className='flex mx-2 lg:mx-72'>
+          <Header />
+          <div className='flex mx-0 lg:mx-24 2xl:mx-72 overflow-x-auto'>
             {children}
           </div>
+          <Footer />
         </ReduxProvider>
 
       </body>
