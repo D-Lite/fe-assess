@@ -6,6 +6,7 @@ export default function useQueryParams() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const pathname = usePathname();
+    console.log(pathname)
   
     const createQueryString = useCallback(
       (name: string, value: string) => {
@@ -17,7 +18,7 @@ export default function useQueryParams() {
     );
   
     const setQueryParam = (queryName: string, value: string) => {
-      router.push(`${pathname}?${createQueryString(queryName, value)}`);
+      router.push(`${pathname+'/'}?${createQueryString(queryName, value)}`);
     };
   
     return { queryParams: searchParams, createQueryString, setQueryParam };

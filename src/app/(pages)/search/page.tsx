@@ -1,6 +1,5 @@
 "use client"
 
-import Header from "@/components/Header";
 import SearchFilter from "@/components/SearchFilter";
 import SearchFilterDropdown from "@/components/SearchFilterDropdown";
 import SchoolCard from "@/components/SchoolCard";
@@ -11,7 +10,7 @@ import { useCallback, useEffect, useState } from "react";
 import { University } from "@/utils/commonTypes";
 import useQueryParams from "@/app/hooks/useQueryHook";
 import ReactPaginate from "react-paginate";
-import Footer from "@/components/Footer";
+import ClientOnly from "@/components/ClientOnly";
 
 
 const SearchPage = () => {
@@ -20,8 +19,7 @@ const SearchPage = () => {
   const [searchValue, setSearchValue] = useState<string>('');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const handleFilterVisibility = useCallback(() => setIsFilterOpen(!isFilterOpen), [isFilterOpen])
-  // const handleVisibility = useCallback(() => setIsFilterOpen(!isFilterOpen), [isFilterOpen])
-
+  const [currentItems, setCurrentItems] = useState<University[]>([]);
   const [totalPages, setTotalPages] = useState(0);
 
 
@@ -29,17 +27,12 @@ const SearchPage = () => {
 
   const itemsPerPage = 10;
   const endOffset = itemOffset + itemsPerPage;
-  const currentItems = filteredRows.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(filteredRows.length / itemsPerPage);
 
-  // Invoke when user click to request another page.
   const handlePageClick = (event: any) => {
     const newOffset = (event.selected * itemsPerPage) % filteredRows.length;
     setItemOffset(newOffset);
   };
-
-
-
 
   const dispatch = useDispatch();
   const [sortByAmount, setSortByAmount] = useState('-can_apply,rank');
@@ -61,6 +54,10 @@ const SearchPage = () => {
     setQueryParam('ordering', sortByAmount)
   }, [schools, sortByAmount, itemsPerPage])
 
+  useEffect(() => {
+    setCurrentItems(filteredRows.slice(itemOffset, endOffset))
+  }, [filteredRows]);
+
   const handleSearch = (value: string) => {
     setSearchValue(value);
     const filtered = rows.filter((school) =>
@@ -72,9 +69,9 @@ const SearchPage = () => {
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSortByAmount(event.target.value);
 
-    // Sort the filtered rows based on the selected sort order
+    
     const sorted = sortRows(filteredRows, event.target.value);
-    setFilteredRows(sorted);
+    setCurrentItems(sorted);
   };
 
   const sortRows = (data: University[], sortOrder: string) => {
@@ -91,7 +88,8 @@ const SearchPage = () => {
 
 
   return (
-    <div className="w-full">
+    <ClientOnly>
+      <div className="w-full">
       <div className=" my-16 px-[10px] md:px-[20px] lg:px-[10px]">
         <p className="text-center text-[25px] md:text-[45px] lg:text-[64px] font-[500]">
           Find Your Dream Programs
@@ -196,6 +194,7 @@ const SearchPage = () => {
         </div>
       </div>
     </div>
+    </ClientOnly>
   );
 };
 
