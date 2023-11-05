@@ -13,7 +13,7 @@ const SchoolCard = ({ school }: { school: University }) => {
                             <div className="w-[100%] px-[30px] pt-[10px] md:p-0 md:w-[30%] flex items-center justify-center">
                                 <Image alt="University logo" src={DefaultUniImage} className="rounded-xl object-cover w-[70%] lg:w-[100%]" style={{ width: '100%', height: '100%', }} />
                             </div>
-                            <div className="flex flex-1 flex-col border-r border-[1px solid] border-gray-300 items-center lg:items-start">
+                            <div className="flex flex-1 flex-col border-none lg:border-r lg:border-[1px solid] lg:border-gray-300 items-center lg:items-start">
                                 <h5 className=" text-[20px]">{school.name}</h5>
                                 <h6 className="text-gray-500 text-[16px] mt-2">{capitalize(school.type)} University</h6>
                                 <h6 className="my-[10px]">{capitalize(school.course)} </h6>
@@ -78,7 +78,7 @@ const SchoolCard = ({ school }: { school: University }) => {
                                 </div>
                             </div>
 
-                            <div className="w-[100%] md🧮 w-[20%] text-center">
+                            <div className="w-[100%] md:w-[20%] text-center">
                                 <div>
                                     <div>
                                         <h6 className="text-gray-500 text-[16px] line-through">{school.amount}.00 EUR</h6>

@@ -11,10 +11,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className=''>
+      <body>
         <ReduxProvider>
           <Header />
-          <div className='flex mx-0 lg:mx-24 2xl:mx-72 overflow-x-auto'>
+          <div className='flex w-full px-0 lg:px-24 2xl:px-72 overflow-x-hidden'>
             {children}
           </div>
           <Footer />

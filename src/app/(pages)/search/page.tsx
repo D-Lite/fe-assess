@@ -20,6 +20,7 @@ const SearchPage = () => {
   const [searchValue, setSearchValue] = useState<string>('');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const handleFilterVisibility = useCallback(() => setIsFilterOpen(!isFilterOpen), [isFilterOpen])
+  // const handleVisibility = useCallback(() => setIsFilterOpen(!isFilterOpen), [isFilterOpen])
 
   const [totalPages, setTotalPages] = useState(0);
 
@@ -91,8 +92,8 @@ const SearchPage = () => {
 
   return (
     <div className="w-full">
-      <div className="my-16 px-[10px] md:px-[20px] lg:px-[10px]">
-        <p className="text-center xs:text-[20px] md:text-[45px] lg:text-[64px] font-[500]">
+      <div className=" my-16 px-[10px] md:px-[20px] lg:px-[10px]">
+        <p className="text-center text-[25px] md:text-[45px] lg:text-[64px] font-[500]">
           Find Your Dream Programs
         </p>
 
@@ -102,7 +103,7 @@ const SearchPage = () => {
               Filters
             </p>
           </div>
-          <div className="flex-1 justify-between items-center flex flex-row w-full">
+          <div className="flex-1 justify-between items-center gap-[5px] flex flex-row w-full">
             <p className="font-[400] text-gray-400 text-[1rem] text-left lg:w-full w-fit">
               We found {filteredRows.length ?? 0} programs for you
             </p>
@@ -127,7 +128,7 @@ const SearchPage = () => {
 
         <div className="flex mt-10 gap-[20px]">
           <div className={`w-[23%] lg:block ${isFilterOpen ? 'flex' : 'hidden'}`}>
-            <SearchFilter data={filteredRows} />
+            <SearchFilter data={filteredRows} open={isFilterOpen} close={handleFilterVisibility} />
           </div>
 
           <div className="flex-1 flex w-full flex-col">

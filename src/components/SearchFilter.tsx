@@ -3,17 +3,21 @@
 import useQueryParams from '@/app/hooks/useQueryHook';
 import { capitalize } from '@/utils/cap';
 import { University } from '@/utils/commonTypes';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Select from 'react-select';
 
 interface Props {
     data: University[];
-    urlQueryFilters?: {}
+    urlQueryFilters?: {},
+    open: boolean,
+    close: any
 }
 
 
-const SearchFilter = ({ data, urlQueryFilters }: Props) => {
-
+const SearchFilter = ({ data, urlQueryFilters, open, close }: Props) => {
+    const [isOpen, setIsOpen] = useState(true);
+    // const handleVisibility = useCallback(() => open = false, [open])
+    // const handleVisibility = useCallback(() => close(!open), [open])
 
     const [languages, setLanguages] = useState<string[]>([]);
     const [campuses, setCampuses] = useState<string[]>([]);
@@ -79,7 +83,7 @@ const SearchFilter = ({ data, urlQueryFilters }: Props) => {
         setSelectedUniversityTypes(universityTypeArray);
 
 
-        
+
 
 
         setIsLoading(false);
@@ -95,8 +99,8 @@ const SearchFilter = ({ data, urlQueryFilters }: Props) => {
 
         return ids.join(',');
     };
-   
- 
+
+
     useEffect(() => {
         const allCountryIds = findIdsFromSelectedArray(selectedCountries, 'country');
         allCountryIds.length > 0 && setQueryParam('country', allCountryIds);
@@ -154,88 +158,201 @@ const SearchFilter = ({ data, urlQueryFilters }: Props) => {
 
 
     return (
-        <div className='w-full py-8 flex flex-col items-center min-h-[650px] border border-gray-400 rounded-xl'>
-            <div className="flex w-full flex-col my-2 gap-[10px] px-4">
-                <p>Country</p>
+        <div>
+            <div className='hidden w-full py-8 md:flex flex-col items-center min-h-[650px] border border-gray-400 rounded-xl'>
+                <div className="flex w-full flex-col my-2 gap-[10px] px-4">
+                    <p>Country</p>
 
-                <Select
-                    placeholder='Select country'
-                    options={countries}
-                    isMulti
-                    isLoading={isLoading}
-                    value={selectedCountries}
-                    onChange={setSelectedCountries}
-                />
+                    <Select
+                        placeholder='Select country'
+                        options={countries}
+                        isMulti
+                        isLoading={isLoading}
+                        value={selectedCountries}
+                        onChange={setSelectedCountries}
+                    />
+                </div>
+
+                <div className="flex flex-col my-2 gap-[10px] px-4 w-full">
+                    <p>University Type</p>
+
+                    <Select
+                        placeholder='Select University Type'
+                        options={universityTypes}
+                        isMulti
+                        isLoading={isLoading}
+                        value={selectedUniversityTypes}
+                        onChange={setSelectedUniversityTypes}
+                    />
+                </div>
+
+                <div className="flex flex-col my-2 gap-[10px] px-4 w-full">
+                    <p>Grade Type</p>
+
+                    <Select
+                        placeholder='Select Grade Type'
+                        options={gradeTypes}
+                        isMulti
+                        isLoading={isLoading}
+                        value={selectedGradeTypes}
+                        onChange={setSelectedGradeTypes}
+                    />
+                </div>
+
+                <div className="flex flex-col my-2 gap-[10px] px-4 w-full">
+                    <p>Education Type</p>
+
+                    <Select
+                        placeholder='Select Education Type'
+                        options={educationTypes}
+                        isMulti
+                        isLoading={isLoading}
+                        value={selectedEducationTypes}
+                        onChange={setSelectedEducationTypes}
+                    />
+                </div>
+
+                <div className="flex flex-col my-2 gap-[10px] px-4 w-full">
+                    <p>Campus Type</p>
+
+                    <Select
+                        placeholder='Select Campus Type'
+                        options={campuses}
+                        isMulti
+                        isLoading={isLoading}
+                        value={selectedCampuses}
+                        onChange={setSelectedCampuses}
+                    />
+                </div>
+
+                <div className="flex flex-col my-2 gap-[10px] px-2 w-full">
+                    <p>Education Language</p>
+
+                    <Select
+                        placeholder='Select Education Language'
+                        options={languages}
+                        isMulti
+                        value={selectedLanguages}
+                        isLoading={isLoading}
+                        onChange={setSelectedLanguages}
+                    />
+                </div>
+
+                <button className='bg-[#0288D1] shadow-2xl w-[80%] text-white rounded-[15px] py-2 px-8 mt-4'>
+                    CLEAR FILTERS
+                </button>
             </div>
 
-            <div className="flex flex-col my-2 gap-[10px] px-4 w-full">
-                <p>University Type</p>
 
-                <Select
-                    placeholder='Select University Type'
-                    options={universityTypes}
-                    isMulti
-                    isLoading={isLoading}
-                    value={selectedUniversityTypes}
-                    onChange={setSelectedUniversityTypes}
-                />
+            <div className={`h-full ${open && 'block'} lg:hidden z-[999]`} role="dialog" aria-modal="true">
+
+                <div className="fixed inset-y-0 right-0 z-[999] w-full overflow-y-auto sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+                    <div className="flex flex-row-reverse h-full">
+                        <div className="flex flex-col w-[20%] h-[inherit]">
+
+                            <div className="flex-1  bg-black opacity-60 bg-blend-overlay">
+                            </div>
+                        </div>
+
+                        <div className="pt-6 flow-root h-[inherit] flex-1 bg-white">
+                            <div className="-my-6">
+                                <div className="bg-gray-100 opacity-100 w-full h-[60px] items-center flex justify-between px-6">
+                                    <h3>Filter</h3>
+                                    <button type="button" onClick={close} className="-m-2.5 rounded-md p-2.5 text-gray-700">
+                                        <span className="sr-only">Close menu</span>
+                                        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div className="flex w-full flex-col my-2 gap-[10px] px-4">
+                                    <p>Country</p>
+
+                                    <Select
+                                        placeholder='Select country'
+                                        options={countries}
+                                        isMulti
+                                        isLoading={isLoading}
+                                        value={selectedCountries}
+                                        onChange={setSelectedCountries}
+                                    />
+                                </div>
+
+                                <div className="flex flex-col my-2 gap-[10px] px-4 w-full">
+                                    <p>University Type</p>
+
+                                    <Select
+                                        placeholder='Select University Type'
+                                        options={universityTypes}
+                                        isMulti
+                                        isLoading={isLoading}
+                                        value={selectedUniversityTypes}
+                                        onChange={setSelectedUniversityTypes}
+                                    />
+                                </div>
+
+                                <div className="flex flex-col my-2 gap-[10px] px-4 w-full">
+                                    <p>Grade Type</p>
+
+                                    <Select
+                                        placeholder='Select Grade Type'
+                                        options={gradeTypes}
+                                        isMulti
+                                        isLoading={isLoading}
+                                        value={selectedGradeTypes}
+                                        onChange={setSelectedGradeTypes}
+                                    />
+                                </div>
+
+                                <div className="flex flex-col my-2 gap-[10px] px-4 w-full">
+                                    <p>Education Type</p>
+
+                                    <Select
+                                        placeholder='Select Education Type'
+                                        options={educationTypes}
+                                        isMulti
+                                        isLoading={isLoading}
+                                        value={selectedEducationTypes}
+                                        onChange={setSelectedEducationTypes}
+                                    />
+                                </div>
+
+                                <div className="flex flex-col my-2 gap-[10px] px-4 w-full">
+                                    <p>Campus Type</p>
+
+                                    <Select
+                                        placeholder='Select Campus Type'
+                                        options={campuses}
+                                        isMulti
+                                        isLoading={isLoading}
+                                        value={selectedCampuses}
+                                        onChange={setSelectedCampuses}
+                                    />
+                                </div>
+
+                                <div className="flex flex-col my-2 gap-[10px] px-2 w-full">
+                                    <p>Education Language</p>
+
+                                    <Select
+                                        placeholder='Select Education Language'
+                                        options={languages}
+                                        isMulti
+                                        value={selectedLanguages}
+                                        isLoading={isLoading}
+                                        onChange={setSelectedLanguages}
+                                    />
+                                </div>
+
+                                <div className="flex justify-center px-2 w-full mt-4">
+                                <button className='bg-[#0288D1] shadow-2xl w-[100%] text-white rounded-[15px] py-2 flex px-20'>
+                                    CLEAR FILTERS
+                                </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div className="flex flex-col my-2 gap-[10px] px-4 w-full">
-                <p>Grade Type</p>
-
-                <Select
-                    placeholder='Select Grade Type'
-                    options={gradeTypes}
-                    isMulti
-                    isLoading={isLoading}
-                    value={selectedGradeTypes}
-                    onChange={setSelectedGradeTypes}
-                />
-            </div>
-
-            <div className="flex flex-col my-2 gap-[10px] px-4 w-full">
-                <p>Education Type</p>
-
-                <Select
-                    placeholder='Select Education Type'
-                    options={educationTypes}
-                    isMulti
-                    isLoading={isLoading}
-                    value={selectedEducationTypes}
-                    onChange={setSelectedEducationTypes}
-                />
-            </div>
-
-            <div className="flex flex-col my-2 gap-[10px] px-4 w-full">
-                <p>Campus Type</p>
-
-                <Select
-                    placeholder='Select Campus Type'
-                    options={campuses}
-                    isMulti
-                    isLoading={isLoading}
-                    value={selectedCampuses}
-                    onChange={setSelectedCampuses}
-                />
-            </div>
-
-            <div className="flex flex-col my-2 gap-[10px] px-2 w-full">
-                <p>Education Language</p>
-
-                <Select
-                    placeholder='Select Education Language'
-                    options={languages}
-                    isMulti
-                    value={selectedLanguages}
-                    isLoading={isLoading}
-                    onChange={setSelectedLanguages}
-                />
-            </div>
-
-            <button className='bg-[#0288D1] shadow-2xl w-[80%] text-white rounded-[15px] py-2 px-8 mt-4'>
-                CLEAR FILTERS
-            </button>
         </div>
     );
 };
