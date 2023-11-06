@@ -6,7 +6,6 @@ export default function useQueryParams() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const pathname = usePathname();
-    console.log(pathname)
   
     const createQueryString = useCallback(
       (name: string, value: string) => {

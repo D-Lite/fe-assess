@@ -92,10 +92,13 @@ const SearchFilter = ({ data, urlQueryFilters, open, close }: Props) => {
     const findIdsFromSelectedArray = (selectedArray: any, propertyName: string) => {
         const ids = selectedArray
             .map((item: { value: string }) => {
-                const itemObject = data.find((school: University) => school[propertyName as keyof University].toLowerCase() === item.value.toLowerCase());
+                const itemObject = data.find((school: University) => {
+                    const propertyValue = school[propertyName as keyof University];
+                    return typeof propertyValue === 'string' && propertyValue.toLowerCase() === item.value.toLowerCase();
+                });
                 return itemObject ? itemObject.id : null;
             })
-            .filter((id) => id !== null);
+            .filter((id: string) => id !== null);
 
         return ids.join(',');
     };

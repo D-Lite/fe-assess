@@ -5,32 +5,51 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 First, run the development server:
 
 ```bash
+npm install --save
+# Then
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+This project was built with the following major dependencies: 
+    Next => 14
+    React => 18
+    React Redux => 8
+    TailwindCSS => 3
 
-## Learn More
+Some major implementations: 
+- Fully responsive application
 
-To learn more about Next.js, take a look at the following resources:
+![Mobile Screen](<src/assets/images/screenshots/scr.jpg>)
+![Mobile Screen 3](<src/assets/images/screenshots/scr2.jpg>)
+![Big Screen1](<src/assets/images/screenshots/bg.png>)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Custom mocked data source to simulate API calls
+### Data fetching and filtering
+![Mobile Screen 2](<src/assets/images/screenshots/scr1.jpg>)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Implemented rehydration from the URL properly handled
+### Ability to filter from lowest to highest order
+![Low to high filtering](<src/assets/images/screenshots/bg.png>)
 
-## Deploy on Vercel
+### Ability to filter from highest to lowest order
+![High to low filtering](<src/assets/images/screenshots/bg2.png>)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Filter parameters synchronization with the URL search parameters
+### Filters updating properly based on the URL search parameters
+### Custom Page Not Found page handled properly
+### Custom hook handling add search parameters, and helper function to help with unique characters
+### Data pagination 
+
+[Next 14 was announced some weeks ago](https://nextjs.org/blog/next-14) and it's exciting working with it already, some changes already from 13 and it took some while getting to read through github issues to achieve some things. There are not enough contents already for Next14 (in terms of articles, github issues and discussions and video content). 
+
+
+Take away: 
+>Into Filtering is currently limited, as there is no comprehensive API provided to handle that, the current data been used was mocked on my end to ensure I don't present statically generated data. The flow would have been: choose any option from the filters ====> append the option selected to the URL params ====> pass the URL search params to the API ====> render the newly filtered data
+
+> New changes in Next/navigation and porting away from Next/Router brought some changes to handling URLs
+
+ Functions I implemented initially were not time-optimized AND can be sources of unwanted interruption in production environments. 
