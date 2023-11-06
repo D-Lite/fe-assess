@@ -25,7 +25,7 @@ const SearchPage = () => {
 
   const [itemOffset, setItemOffset] = useState(0);
 
-  const itemsPerPage = 10;
+  const itemsPerPage = 5;
   const endOffset = itemOffset + itemsPerPage;
   const pageCount = Math.ceil(filteredRows.length / itemsPerPage);
 
@@ -50,9 +50,12 @@ const SearchPage = () => {
     setFilteredRows(schools)
 
     setTotalPages(Math.ceil(schools / itemsPerPage));
-    setQueryParam('limit', itemsPerPage.toString());
     setQueryParam('ordering', sortByAmount)
-  }, [schools, sortByAmount, itemsPerPage])
+  }, [filteredRows, sortByAmount, itemsPerPage])
+
+  useEffect(() => {
+    setQueryParam('limit', itemsPerPage.toString())
+  }, [itemsPerPage, schools])
 
   useEffect(() => {
     setCurrentItems(filteredRows.slice(itemOffset, endOffset))
@@ -180,7 +183,7 @@ const SearchPage = () => {
                   breakLabel="..."
                   nextLabel=">"
                   className="flex justify-between gap-5 min-w-[50px]"
-                  activeClassName="w-[30px] h-[30px] flex justify-center bg-gray-200 p-0 m-0 rounded-full"
+                  activeClassName="min-w-[30px] h-[30px] flex justify-center bg-gray-200 p-0 m-0 rounded-full"
                   onPageChange={handlePageClick}
                   pageRangeDisplayed={5}
                   pageCount={pageCount}
